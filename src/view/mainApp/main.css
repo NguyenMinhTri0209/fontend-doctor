@@ -1,0 +1,646 @@
+/* Google Font Import - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Manuale:wght@500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Manuale", serif;
+}
+
+:root {
+  /* ===== Colors ===== */
+  --color: #0cf;
+  --mainBody-color: #e4e9f7;
+  --sidebarcs-color: #fff;
+  --primary-color: #877dfe;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
+  --text-color: black;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
+}
+
+mainBody {
+  min-height: 100vh;
+  background-color: var(--mainBody-color);
+  transition: var(--tran-05);
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+mainBody.dark {
+  --mainBody-color: #18191a;
+  --sidebarcs-color: #242526;
+  --primary-color: #3a3b3c;
+  --primary-color-light: #3a3b3c;
+  --toggle-color: #fff;
+  --text-color: #ccc;
+}
+
+/* ===== Sidebar ===== */
+.sidebarcs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  padding: 10px 14px;
+  background: var(--sidebarcs-color);
+  transition: var(--tran-05);
+  z-index: 100;
+}
+.sidebarcs.close {
+  width: 88px;
+}
+
+/* ===== Reusable code - Here ===== */
+.sidebarcs li {
+  height: 50px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.sidebarcs main-header .imagecs,
+.sidebarcs .iconcs {
+  min-width: 60px;
+  border-radius: 6px;
+}
+
+.sidebarcs .iconcs {
+  min-width: 60px;
+  border-radius: 6px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.sidebarcs .textcs,
+.sidebarcs .iconcs {
+  color: var(--text-color);
+  transition: var(--tran-03);
+}
+
+.sidebarcs .textcs {
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 1;
+}
+.sidebarcs.close .textcs {
+  opacity: 0;
+}
+/* =========================== */
+
+.sidebarcs main-header {
+  position: relative;
+}
+
+.sidebarcs main-header .image-textcs {
+  display: flex;
+  align-items: center;
+}
+.sidebarcs main-header .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+main-header .image-textcs .namecs {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+main-header .image-textcs .professioncs {
+  font-size: 16px;
+  margin-top: -2px;
+  display: block;
+}
+
+.sidebarcs main-header .imagecs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebarcs main-header .imagecs img {
+  width: 40px;
+  border-radius: 6px;
+}
+
+.sidebarcs main-header .togglecs {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  transform: translateY(-50%) rotate(180deg);
+  height: 25px;
+  width: 25px;
+  background-color: #877dfe;
+  color: var(--sidebarcs-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: var(--tran-05);
+}
+
+mainBody.dark .sidebarcs main-header .togglecs {
+  color: var(--text-color);
+}
+
+.sidebarcs.close .togglecs {
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.sidebarcs .menucs {
+  margin-top: 40px;
+}
+
+.sidebarcs li.search-boxcs {
+  border-radius: 6px;
+  background-color: var(--primary-color-light);
+  cursor: pointer;
+  transition: var(--tran-05);
+}
+
+.sidebarcs li.search-boxcs input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: var(--primary-color-light);
+  color: var(--text-color);
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 500;
+  transition: var(--tran-05);
+}
+.sidebarcs li a {
+  list-style: none;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: var(--tran-03);
+}
+
+.sidebarcs li a:hover {
+  background-color: var(--primary-color);
+}
+.sidebarcs li a:hover .iconcs,
+.sidebarcs li a:hover .textcs {
+  color: var(--sidebarcs-color);
+}
+mainBody.dark .sidebarcs li a:hover .iconcs,
+mainBody.dark .sidebarcs li a:hover .textcs {
+  color: var(--text-color);
+}
+
+.menu-links {
+  padding: 0;
+}
+
+.sidebarcs .menu-barcs {
+  height: calc(100% - 55px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+.menu-barcs::-webkit-scrollbar {
+  display: none;
+}
+.sidebarcs .menu-barcs .modecs {
+  border-radius: 6px;
+  background-color: var(--primary-color-light);
+  position: relative;
+  transition: var(--tran-05);
+}
+
+.menu-barcs .modecs .sun-mooncs {
+  height: 50px;
+  width: 60px;
+}
+
+.modecs .sun-mooncs i {
+  position: absolute;
+}
+.modecs .sun-mooncs i.suncs {
+  opacity: 0;
+}
+mainBody.dark .modecs .sun-mooncs i.suncs {
+  opacity: 1;
+}
+mainBody.dark .modecs .sun-mooncs i.mooncs {
+  opacity: 0;
+}
+
+.menu-barcs .bottom-content .toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.toggle-switch .switch {
+  position: relative;
+  height: 22px;
+  width: 40px;
+  border-radius: 25px;
+  background-color: var(--toggle-color);
+  transition: var(--tran-05);
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  background-color: var(--sidebarcs-color);
+  transition: var(--tran-04);
+}
+
+mainBody.dark .switch::before {
+  left: 20px;
+}
+
+.homecs {
+  position: absolute;
+  top: 0;
+  top: 0;
+  left: 250px;
+  height: 100vh;
+  width: calc(100% - 250px);
+  background-color: var(--mainBody-color);
+  transition: var(--tran-05);
+}
+.homecs .textcs {
+  /* font-size: 30px; */
+  /* font-weight: 500; */
+  color: var(--text-color);
+  padding: 12px 70px;
+}
+
+.sidebarcs.close ~ .homecs {
+  left: 78px;
+  height: 100vh;
+  width: calc(100% - 78px);
+}
+
+mainBody.dark .homecs .textcs {
+  color: var(--text-color);
+}
+
+.homecs .textcs .buttoncs {
+  width: 120px;
+  margin-left: 5px;
+  color: black;
+  font-size: 14px;
+  background-image: linear-gradient(
+    to right,
+    #fff 0%,
+    #fff 50%,
+    #0d6efd 50%,
+    #0d6efd 100%
+  );
+  background-size: 200% 100%;
+  transition: background-position 0.3s ease-out;
+  cursor: pointer;
+}
+
+.homecs .textcs .buttoncs:hover {
+  box-shadow: 1px 2px 3px 4px rgba(12, 12, 12, 0.2);
+  color: #fff;
+  background-position: -100% 0;
+}
+
+.homecs .textcs .buttoncs.active {
+  background-color: #0d6efd;
+  color: #fff;
+  background-image: none;
+}
+
+.hsba table,
+.plthuoc table,
+.bn table,
+.thuoc table,
+.qlnv table,
+.qlbs table,
+.qlt table,
+.tt table {
+  margin: 0 auto !important;
+}
+
+.hsba table th,
+.hsba table tr,
+.plthuoc table tr,
+.plthuoc table th,
+.bn table tr,
+.bn table th,
+.thuoc table tr,
+.thuoc table th,
+.qltn table th,
+.qltnm table tr,
+.tt table th,
+.tt table tr {
+  /* border: 1px solid black; */
+  padding: 10px;
+}
+
+/*ârn filter*/
+.sr-only {
+  display: none;
+}
+
+.modelcs {
+  position: fixed;
+  height: 80vh;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.bhytcs {
+  position: fixed;
+  height: 50vh;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.suapt {
+  position: fixed;
+  height: 40vh;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.phieuthuoccs {
+  position: fixed;
+  height: 60vh;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.xoacs {
+  position: fixed;
+  height: 30vh;
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.kethuoc {
+  position: fixed;
+  height: 70vh;
+  width: 60%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.thanhtoan {
+  position: fixed;
+  height: 70vh;
+  min-width: 60%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.thanhtoancn {
+  position: fixed;
+  height: 70vh;
+  min-width: 60%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.thanhtoanct {
+  position: fixed;
+  height: 70vh;
+  min-width: 30%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+}
+
+.thanhtoanct table th,
+.thanhtoanct table tr {
+  padding: 5px;
+}
+
+.modal-content {
+  max-height: 70vh; /* Chiều cao tối đa của modal */
+  overflow: auto; /* Cho phép cuộn trang bên trong modal */
+}
+
+.kethuoccs th,
+.kethuoccs tr {
+  padding: 0 10px;
+}
+
+.thanhtoan th,
+.thanhtoan tr {
+  padding: 0 10px;
+}
+
+.buttonModal {
+  width: 120px;
+  height: 40px;
+  margin-left: 5px;
+  color: black;
+  font-size: 14px;
+  background-color: #e4e9f7;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buttonModalct {
+  width: 120px;
+  height: 40px;
+  margin-left: 5px;
+  color: black;
+  font-size: 14px;
+  background-color: #e4e9f7;
+  border-radius: 5px;
+  cursor: pointer;
+
+  position: fixed;
+  right: 0;
+  margin-right: 70px;
+}
+
+.buttonModalct:hover {
+  width: 120px;
+  height: 40px;
+  color: black;
+  font-size: 14px;
+  background-color: #0d6efd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buttonthempt {
+  width: 75px;
+  height: 40px;
+  color: black;
+  font-size: 14px;
+  background-color: #e4e9f7;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.phieuthuoccs #pageDropDown {
+  display: none;
+}
+
+.phieuthuoccs .table .table-bordered {
+  position: relative;
+  z-index: 1;
+}
+
+.phieuthuoccs .page-link {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+
+  right: 0;
+  transform: translate(0, -50%);
+}
+
+.buttonModal:hover {
+  width: 120px;
+  height: 40px;
+  margin-left: 5px;
+  color: black;
+  font-size: 14px;
+  background-color: #0d6efd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modelcs th,
+.modelcs tr,
+.bhytcs th,
+.bhytcs tr,
+.suapt th,
+.suapt tr {
+  padding: 0 15px;
+}
+
+.modelcs th h2,
+.bhytcs th h2,
+.suapt th h2 {
+  text-align: center;
+}
+
+#text-filter-column-tenbenh,
+#text-filter-column-mabenh,
+#text-filter-column-trieuchung {
+  margin-left: 20px;
+}

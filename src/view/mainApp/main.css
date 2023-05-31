@@ -10,7 +10,7 @@
 :root {
   /* ===== Colors ===== */
   --color: #0cf;
-  --mainBody-color: #e4e9f7;
+  --mainBody-color: #ffffff;
   --sidebarcs-color: #fff;
   --primary-color: #877dfe;
   --primary-color-light: #f6f5ff;
@@ -330,6 +330,7 @@ mainBody.dark .homecs .textcs {
   background-size: 200% 100%;
   transition: background-position 0.3s ease-out;
   cursor: pointer;
+  border: 1px outset;
 }
 
 .homecs .textcs .buttoncs:hover {
@@ -560,6 +561,24 @@ mainBody.dark .homecs .textcs {
   cursor: pointer;
 }
 
+.lk {
+  position: fixed;
+  height: 20vh;
+  min-width: 30%;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f4fc;
+  transition: var(--tran-05);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid;
+  border-style: outset;
+  justify-content: center;
+  display: flex;
+  z-index: 999;
+}
+
 .buttonModalct {
   width: 120px;
   height: 40px;
@@ -643,4 +662,62 @@ mainBody.dark .homecs .textcs {
 #text-filter-column-mabenh,
 #text-filter-column-trieuchung {
   margin-left: 20px;
+}
+
+.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+  background-color: #fbfbfb;
+  z-index: -1;
+}
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+  position: absolute !important;
+}
+
+.appointment-details {
+  padding: 20px;
+}
+
+.detail-item table {
+  width: 100% !important;
+}
+
+.detail-item {
+  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.confirm-button {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.confirm-button button {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+.confirm-button button:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.detail-item table th {
+  width: 60vh !important;
+  padding: 10px;
+}
+
+.detail-item table {
+  border: 1px solid #ddd;
 }

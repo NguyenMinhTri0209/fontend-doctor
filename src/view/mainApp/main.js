@@ -19,6 +19,10 @@ import Select from "react-select";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import viLocale from "@fullcalendar/core/locales/vi";
+
 function MainApp(props) {
   const [isClose, setIsClose] = useState(false);
   const { user } = props;
@@ -45,6 +49,8 @@ function MainApp(props) {
   const [dataBSm, setdataBs] = useState([]);
   const [dataBillcs, setDataBillcs] = useState([]);
   const [dataBillcscn, setDataBillcscn] = useState([]);
+  const [lichKham, setLK] = useState([]);
+  const [lickKhamnv, setLKNV] = useState([]);
 
   useEffect(() => {
     axios
@@ -91,7 +97,65 @@ function MainApp(props) {
       .get("http://localhost:8080/bill/getallcscn")
       .then((response) => setDataBillcscn(response.data))
       .catch((error) => console.log(error));
+
+    const linkLK =
+      "http://localhost:8080/registerservice/getlist/" + currentUser.mabs;
+    axios
+      .get(linkLK)
+      .then((response) => setLK(response.data))
+      .catch((error) => console.log(error));
+
+    axios
+      .get("http://localhost:8080/registerservice/getlistxn")
+      .then((response) => setLKNV(response.data))
+      .catch((error) => console.log(error));
   }, []);
+
+  const events = lichKham.map((lich) => ({
+    title: lich.ghichu,
+    start: new Date(lich.ngaykham),
+    malichkham: lich.malichkham,
+  }));
+
+  const [isOpenLK, setIsOpenLK] = useState(false);
+  // const [selectedEvent, setSelectedEvent] = useState(null);
+
+  // const openModal = (event) => {
+  //   setSelectedEvent(event);
+  //   console.log(event);
+  //   setIsOpenLK(true);
+  // };
+
+  const [makx, setmakx] = useState("");
+
+  const openModal = (info) => {
+    const event = info.event;
+    const { title, start, malichkham } = event.extendedProps;
+    setmakx(malichkham);
+    console.log(malichkham);
+    setIsOpenLK(true);
+  };
+
+  const closeModal = () => {
+    setIsOpenLK(false);
+  };
+
+  const khamxong = (id) => {
+    const linkLKt = "http://localhost:8080/registerservice/update/" + id;
+
+    axios
+      .get(linkLKt)
+      .then((response) => {
+        // Xóa phần tử đã được nhấn vào khỏi mảng lichKham
+        setLK((prevLichKham) =>
+          prevLichKham.filter((lich) => lich.malichkham !== id)
+        );
+      })
+      .then(() => {
+        closeModal();
+      })
+      .catch((error) => console.log(error));
+  };
 
   //pop up tong
   //pop up thanh toan chi tiet
@@ -2039,6 +2103,32 @@ function MainApp(props) {
     },
   ];
 
+  // bảng lkham
+  const columnslk = [
+    {
+      dataField: "malichkham",
+      text: "Mã lich khám",
+      headerStyle: () => {
+        return { width: "100px", backgroundColor: "#a2a4a5" };
+      },
+    },
+    {
+      dataField: "ngaykham",
+      text: "Ngày khasm",
+      formatter: (cell, row) => {
+        if (!cell) {
+          return "";
+        }
+        const date = new Date(cell);
+        const formattedDate = date.toLocaleDateString();
+        return formattedDate;
+      },
+      headerStyle: () => {
+        return { width: "100px", backgroundColor: "#a2a4a5" };
+      },
+    },
+  ];
+
   //chon tab
   const [currentTab, setCurrentTab] = useState("hsba");
   const handleTabClick = (tab) => {
@@ -2055,6 +2145,12 @@ function MainApp(props) {
   const [tabThanhToan, setThanhToanNV] = useState("tt");
   const handleTabThanhToan = (tab) => {
     setThanhToanNV(tab);
+  };
+
+  //tab thống kê bên admin
+  const [tabtk, settk] = useState("tkt");
+  const handleTabThanhToantk = (tab) => {
+    settk(tab);
   };
 
   // Kiểm tra xem đã có giá trị trong local storage chưa
@@ -2503,7 +2599,67 @@ function MainApp(props) {
           ) : isCloseTC == "nav-link pt" ? (
             <div className="textcs">123</div>
           ) : (
-            <div className="textcs">0</div>
+            <div className="textcs">
+              <div class="appointment-details">
+                {lickKhamnv.map((appointment, index) => (
+                  <div class="appointment-item">
+                    <div class="detail-item">
+                      <table className="Ttoan">
+                        <tr>
+                          <th>
+                            <span class="detail-label">Mã lịch khám:</span>
+                            <span class="detail-value">
+                              {appointment.malichkham}
+                            </span>
+                          </th>
+                          <th>
+                            <span class="detail-label">Ngày khám:</span>
+                            <span class="detail-value">
+                              {appointment.ngaykham.split("T")[0]}
+                            </span>
+                          </th>
+
+                          <th>
+                            <span class="detail-label">Tên bệnh nhân:</span>
+                            <span class="detail-value">
+                              {appointment.tenbn}
+                            </span>
+                          </th>
+                          <th>
+                            <span class="detail-label">Số điện thoại:</span>
+                            <span class="detail-value">
+                              {appointment.sodienthoai}
+                            </span>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>
+                            <span class="detail-label">Tên dịch vụ:</span>
+                            <span class="detail-value">
+                              {appointment.tendv}
+                            </span>
+                          </th>
+                          <th colSpan={2}>
+                            <span class="detail-label">Ghi chú:</span>
+                            <span class="detail-value">
+                              {appointment.ghichu
+                                ? appointment.ghichu
+                                : "(Trống)"}
+                            </span>
+                          </th>
+
+                          <th>
+                            <div class="confirm-button">
+                              <button>Xác nhận khám</button>
+                            </div>
+                          </th>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </section>
       ) : currentUser.quyen === "USER" && currentUser.chucvu !== "Nhân viên" ? (
@@ -2687,7 +2843,18 @@ function MainApp(props) {
               </div>
             </div>
           ) : (
-            <div className="textcs">O</div>
+            <div className="textcs">
+              <FullCalendar
+                plugins={[dayGridPlugin]}
+                initialView="dayGridMonth"
+                weekends={true}
+                events={events}
+                eventContent={renderEventContent}
+                className="full-calendar"
+                locale={viLocale}
+                eventClick={openModal} // Sử dụng hàm eventClick đã được cập nhật
+              />
+            </div>
           )}
         </section>
       ) : (
@@ -2988,10 +3155,48 @@ function MainApp(props) {
                 </div>
               )}
             </div>
-          ) : isCloseTC == "nav-link" ? (
-            <div className="textcs">O</div>
+          ) : isCloseTC == "nav-link tk" ? (
+            <div className="textcs">
+              <div className="hsba">
+                {/* tab */}
+
+                <button
+                  className={`buttoncs ${
+                    currentTab === "hsba" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("hsba")}
+                >
+                  Thống kê thuốc
+                </button>
+
+                <button
+                  className={`buttoncs ${
+                    currentTab === "plthuoc" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("plthuoc")}
+                >
+                  Thống kê hóa đơn
+                </button>
+
+                <button
+                  className={`buttoncs ${currentTab === "bn" ? "active" : ""}`}
+                  onClick={() => handleTabClick("bn")}
+                >
+                  Thống kê DV
+                </button>
+
+                <button
+                  className={`buttoncs ${
+                    currentTab === "thuoc" ? "active" : ""
+                  }`}
+                  onClick={() => handleTabClick("thuoc")}
+                >
+                  Thống kê y, thiết bị
+                </button>
+              </div>
+            </div>
           ) : (
-            <div className="textcs">O</div>
+            <div className="textcs">Đang phát triển</div>
           )}
         </section>
       )}
@@ -3747,9 +3952,39 @@ function MainApp(props) {
             </table>
           </div>
         </Modal>
+        <Modal className="lk" isOpen={isOpenLK} onRequestClose={closeModal}>
+          <table>
+            <tr>
+              <th>
+                <button className="buttonModal" onClick={() => khamxong(makx)}>
+                  Khám xong
+                </button>
+              </th>
+              <th>
+                <button className="buttonModal" onClick={() => khamxong(makx)}>
+                  Hủy lịch khám
+                </button>
+              </th>
+              <th>
+                <button className="buttonModal" onClick={closeModal}>
+                  Đóng
+                </button>
+              </th>
+            </tr>
+          </table>
+        </Modal>
       </div>
     </mainBody>
   );
 }
 
 export default MainApp;
+
+function renderEventContent(eventInfo) {
+  return (
+    <>
+      <b>{eventInfo.timeText}</b>
+      <i>{eventInfo.event.title}</i>
+    </>
+  );
+}
